@@ -1,2 +1,6 @@
-package com.LDLS.Auth.models;public enum Role {
+package com.LDLS.Auth.models;
+
+public enum Role {
+    ADMIN,
+    USER
 }

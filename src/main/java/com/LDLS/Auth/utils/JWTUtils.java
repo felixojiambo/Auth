@@ -18,27 +18,35 @@ import java.util.function.Function;
 @Component
 public class JWTUtils {
     private SecretKey Key;
-    private static final long EXPIRATION_TIME = 86400000;
-    public JWTUtils() {
-        try {
-            // Load the properties file
-            Properties properties = new Properties();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("application.properties");
-            if (inputStream == null) {
-                throw new IllegalArgumentException("Could not find application.properties");
-            }
-            properties.load(inputStream);
-
-            // Retrieve the secret key from the properties
-            String secretString = properties.getProperty("secret.key");
-            byte[] keyBytes = Base64.getDecoder().decode(secretString.getBytes(StandardCharsets.UTF_8));
-            this.Key = new SecretKeySpec(keyBytes, "HmacSHA256");
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load secret key", e);
-        } catch (java.io.IOException e) {
-            throw new RuntimeException(e);
-        }
+    private  static  final long EXPIRATION_TIME = 86400000; //24hours or 86400000 milisecs
+    public JWTUtils(){
+        String secreteString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
+        byte[] keyBytes = Base64.getDecoder().decode(secreteString.getBytes(StandardCharsets.UTF_8));
+        this.Key = new SecretKeySpec(keyBytes, "HmacSHA256");
     }
+
+    //    private SecretKey Key;
+//    private static final long EXPIRATION_TIME = 86400000;
+//    public JWTUtils() {
+//        try {
+//            // Load the properties file
+//            Properties properties = new Properties();
+//            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("application.properties");
+//            if (inputStream == null) {
+//                throw new IllegalArgumentException("Could not find application.properties");
+//            }
+//            properties.load(inputStream);
+//
+//            // Retrieve the secret key from the properties
+//            String secretString = properties.getProperty("secret.key");
+//            byte[] keyBytes = Base64.getDecoder().decode(secretString.getBytes(StandardCharsets.UTF_8));
+//            this.Key = new SecretKeySpec(keyBytes, "HmacSHA256");
+//        } catch (IOException e) {
+//            throw new RuntimeException("Failed to load secret key", e);
+//        } catch (java.io.IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
     public String generateToken(UserDetails userDetails){
         return Jwts.builder()
                 .subject(userDetails.getUsername())
